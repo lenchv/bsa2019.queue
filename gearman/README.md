@@ -16,6 +16,11 @@ Run the example:
 > php client.php
 >
 
+Usefull commands:
+
+> gearadmin --show-jobs \
+> gearadmin --workers
+
 More details:
 
 [https://www.php.net/manual/en/book.gearman.php](https://www.php.net/manual/en/book.gearman.php)
