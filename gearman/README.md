@@ -7,18 +7,15 @@ Installation:
 Run the example:
 
 > \# start gearman server
->
-> `sudo gearmand -d`
+> sudo gearmand -d
 >
 > \# run worker
->
-> `php worker.php`
+> php worker.php
 >
 > \# run client
->
-> `php client.php`
+> php client.php
 >
 
 More details:
 
-[!https://www.php.net/manual/en/book.gearman.php](https://www.php.net/manual/en/book.gearman.php)
+[https://www.php.net/manual/en/book.gearman.php](https://www.php.net/manual/en/book.gearman.php)
