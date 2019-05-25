@@ -6,13 +6,13 @@ Installation:
 
 Run the example:
 
-> \# start gearman server
+> \# start gearman server \
 > sudo gearmand -d
 >
-> \# run worker
+> \# run worker \
 > php worker.php
 >
-> \# run client
+> \# run client \
 > php client.php
 >
 
