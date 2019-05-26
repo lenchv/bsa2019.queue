@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  php:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    volumes:
+      - ./src:/myapp
+  gearman:
+    image: artefactual/gearmand:1.1.18-alpine

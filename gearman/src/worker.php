@@ -2,9 +2,9 @@
 
 echo "Worker started..." . PHP_EOL;
 
-$config = require('./config.php');
-$func = require('./func.php');
-$benchmark = require('./benchmark.php');
+$config = require(__DIR__ . '/config.php');
+$func = require(__DIR__ . '/func.php');
+$benchmark = require(__DIR__ . '/benchmark.php');
 $gmWorker = new GearmanWorker();
 
 $gmWorker->addServer(
