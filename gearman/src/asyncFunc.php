@@ -1,6 +1,6 @@
 <?php
 
-$config = require('./config.php');
+$config = require(__DIR__ . '/config.php');
 
 $gmClient = new GearmanClient();
 

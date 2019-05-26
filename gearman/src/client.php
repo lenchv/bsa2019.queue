@@ -1,7 +1,7 @@
 <?php
-$func = require('./func.php');
-$asyncFunc = require('./asyncFunc.php');
-$benchmark = require('./benchmark.php');
+$func = require(__DIR__ . '/func.php');
+$asyncFunc = require(__DIR__ . '/asyncFunc.php');
+$benchmark = require(__DIR__ . '/benchmark.php');
 
 $testData = "Test data ";
 
