@@ -1,9 +1,9 @@
 node_modules
-laravel/public/hot
-laravel/public/js
-laravel/public/css
-laravel/public/storage
-laravel/storage/*.key
+public/hot
+public/js
+public/css
+public/storage
+storage/*.key
 vendor
 .env
 .phpunit.result.cache
