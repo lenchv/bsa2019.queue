@@ -47,8 +47,6 @@ services:
     working_dir: /myapp
     networks:
       - broadcasting
-    ports:
-      - 8001:6001
     volumes:
       - ./:/myapp
 networks:

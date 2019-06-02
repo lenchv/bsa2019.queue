@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::put('/queue/sync', 'QueueController@syncTask');
 Route::put('/queue/async', 'QueueController@asyncTask');
 Route::put('/queue/fail', 'QueueController@failJob');
+
+Route::post('/message', 'ChatController@send');

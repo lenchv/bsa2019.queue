@@ -1,7 +1,7 @@
 <template>
     <div class="message">
-        <div v-bind:class="{
-            owner: isOwner
+        <div class="message__text" v-bind:class="{
+            message__text_owner: isOwner
         }">
             {{ message.text }}
         </div>
@@ -22,3 +22,23 @@
         }
     }
 </script>
+
+<style lang="scss" scopped>
+    .message {
+        overflow: hidden;
+
+        &__text {
+            float: left;
+            padding: 5px 10px;
+            border-radius: 0 17px 17px 0;
+            margin: 1px 0; 
+            background-color: #d3e9fb;
+            
+            &_owner {
+                float: right;
+                border-radius: 17px 0 0 17px;
+                background-color: #f0f0f0;
+            }
+        }
+    }
+</style>

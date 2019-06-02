@@ -15,7 +15,7 @@
 > docker-compose exec php php artisan queue:work --tries=3
 >
 >
-> docker-compose exec php php artisan make:job Example1
+> docker-compose exec php php artisan make:job \<job name\>
 
 > \# show beanstalk stats \
 > echo -e "stats\r\n" | nc 127.0.0.1 11300
@@ -43,9 +43,9 @@ curl -XPUT -H "Content-Type: application/json" \
 
 ## Failed Jobs
 
-> docker-compose exec php php artisan queue:failed-table
-> docker-compose exec php php artisan migrate
-> docker-compose exec php php artisan queue:failed
+> docker-compose exec php php artisan queue:failed-table \
+> docker-compose exec php php artisan migrate \
+> docker-compose exec php php artisan queue:failed \
 > docker-compose exec php php artisan queue:retry <ID>
 ```
 curl -XPUT http://127.0.0.1:8000/api/queue/fail 
@@ -55,5 +55,14 @@ curl -XPUT http://127.0.0.1:8000/api/queue/fail
 
 > docker-compose run --rm node npm install \
 > docker-compose run --rm node ./node_modules/.bin/laravel-echo-server init \
-> docker-compose run --rm node ./node_modules/.bin/laravel-echo-server start \
+
+Run 
+> docker-compose run --rm -p 6001:6001 node ./node_modules/.bin/laravel-echo-server start \
 > docker-compose run --rm node npm run watch \
+> docker-compose exec php php artisan serve --port=8000 --host=0.0.0.0 \
+> docker-compose exec php php artisan queue:work --tries=1
+```
+curl -XPOST http://127.0.0.1:8000/api/message -H "Content-Type: application/json" -d"{\
+    \"message\": \"text\"\
+}"
+```

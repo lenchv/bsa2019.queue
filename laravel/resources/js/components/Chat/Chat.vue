@@ -40,11 +40,21 @@
         },
         methods: {
             send(message) {
-                this.messages.push(getMessage(message, this.authorId));
+                this.messages.push(
+                    getMessage(message, this.authorId)
+                );
             }
         },
         mounted() {
             this.authorId = "1";
+
+            Echo.channel('chat')
+                .listen('MessageEvent', (e) => {
+                    console.log(e);
+                    this.messages.push(
+                        getMessage(e.text, e.author)
+                    );
+                });
         }
     }
 </script>
@@ -67,7 +77,10 @@
         &__messages {
             height: calc(100% - 30px);
             overflow-y: auto;
-            padding: 15px 10px 0 10px;
+
+            &::-webkit-scrollbar { 
+                display: none; 
+            }
         }
     }
 </style>
