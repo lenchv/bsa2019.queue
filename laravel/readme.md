@@ -20,7 +20,7 @@
 > \# show beanstalk stats \
 > echo -e "stats\r\n" | nc 127.0.0.1 11300
 
-## Example 1
+## Sync \ Async operations
 ```
 # sync
 
@@ -41,7 +41,7 @@ curl -XPUT -H "Content-Type: application/json" \
     }"
 ```
 
-## Miscellenious
+## Failed Jobs
 
 > docker-compose exec php php artisan queue:failed-table
 > docker-compose exec php php artisan migrate
@@ -50,3 +50,10 @@ curl -XPUT -H "Content-Type: application/json" \
 ```
 curl -XPUT http://127.0.0.1:8000/api/queue/fail 
 ```
+
+## Broadcasting
+
+> docker-compose run --rm node npm install \
+> docker-compose run --rm node ./node_modules/.bin/laravel-echo-server init \
+> docker-compose run --rm node ./node_modules/.bin/laravel-echo-server start \
+> docker-compose run --rm node npm run watch \

@@ -13,6 +13,7 @@ services:
       - 8000:8000
     networks:
       - queue
+      - broadcasting
   composer:
     image: composer:latest
     volumes:
@@ -35,7 +36,22 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     networks:
       - queue
-  
+  redis:
+    image: redis:5
+    networks:
+      - broadcasting
+  node:
+    build:
+      dockerfile: .docker/node/Dockerfile
+      context: .
+    working_dir: /myapp
+    networks:
+      - broadcasting
+    ports:
+      - 8001:6001
+    volumes:
+      - ./:/myapp
 networks:
   queue:
+  broadcasting:
 
