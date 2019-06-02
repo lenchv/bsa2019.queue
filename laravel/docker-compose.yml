@@ -4,10 +4,13 @@ services:
     build:
       dockerfile: .docker/php/Dockerfile
       context: .
+      args:
+        - UID=1000
+        - GID=1000
     volumes:
       - ./:/var/www/html
     ports:
-      - 8000:80
+      - 8000:8000
     networks:
       - queue
   composer:
@@ -17,13 +20,14 @@ services:
         - ./.composer:/composer
   beanstalk:
     image: schickling/beanstalkd:latest
+    ports:
+      - 11300:11300
     networks:
       - queue
   mariadb:
     image: mariadb:latest
     env_file:
       - .env
-    
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=user

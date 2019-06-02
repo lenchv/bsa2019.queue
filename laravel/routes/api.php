@@ -13,6 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::put('/queue/sync', 'QueueController@syncTask');
+Route::put('/queue/async', 'QueueController@asyncTask');
+Route::put('/queue/fail', 'QueueController@failJob');
