@@ -1,0 +1,23 @@
+version: "3.5"
+services:
+  php:
+    image: php:7.3.6-fpm-stretch
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8000:80
+    networks:
+      - queue
+  composer:
+    image: composer:latest
+    volumes:
+        - ./:/app
+        - ./.composer:/composer
+  beanstalk:
+    image: schickling/beanstalkd:latest
+    networks:
+      - queue
+  
+networks:
+  queue:
+
