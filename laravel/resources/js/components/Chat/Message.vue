@@ -11,13 +11,13 @@
 <script>
     export default {
         props: {
-            authorId: String,
+            userName: String,
             message: Object
         },
 
         computed: {
             isOwner() {
-                return this.authorId === this.message.author;
+                return this.userName === this.message.author;
             }
         }
     }

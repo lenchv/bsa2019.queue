@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="chat-wrapper">
         <div class="chat">
             <div class="chat__messages">
                 <message
                     v-for="(message, index) in messages"
-                    v-bind:authorId="authorId"
+                    v-bind:userName="user.name"
                     v-bind:message="message"
                     v-bind:key="index"
                 />
@@ -13,58 +13,86 @@
                 <chat-input v-on:change="send"/>
             </div>
         </div>
+        <auth-modal v-bind:show="needsAuthorization" v-on:enter="auth"/>
     </div>
 </template>
 
 <script>
+    import AuthModal from './AuthModal.vue';
     import ChatInput from './ChatInput.vue';
     import Message from './Message.vue';
-
-    const getMessage = (text, author) => ({ text, author });
+    import chatService from '../../services/chatService';
+    import userService from '../../services/userService';
 
     export default {
         components: {
             'chat-input': ChatInput,
-            'message': Message
+            'message': Message,
+            'auth-modal': AuthModal
         },
         data() {
             return {
-                authorId: null,
+                user: {},
                 messages: []
             };
         },
         computed: {
-            isOwner() {
-
+            needsAuthorization() {
+                return !this.user.id;
             }
         },
         methods: {
             send(message) {
-                this.messages.push(
-                    getMessage(message, this.authorId)
-                );
+                chatService.putMessage(message, this.user.id)
+                    .then(() => {
+                        const messageItem = chatService.getMessage(
+                            message,
+                            this.user.name
+                        );
+                        this.messages.push(messageItem);
+                    })
+                    .catch(console.error);
+            },
+
+            auth(userName) {
+                return userService.authnticate(userName)
+                    .then(userData => {
+                        this.user = Object.assign({
+                            name: '',
+                            id: -1
+                        }, userData);
+
+                        return this.user;
+                    })
+                    .then((user) => {
+                        chatService.broadcast('chat')
+                            .on(`message.${user.id}`, (e) => {
+                                this.messages.push(
+                                    getMessage(
+                                        e.message,
+                                        e.author
+                                    )
+                                );
+                            });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        this.user = {};
+                    });
             }
         },
         mounted() {
-            this.authorId = "1";
-
-            Echo.channel('chat')
-                .listen('MessageEvent', (e) => {
-                    console.log(e);
-                    this.messages.push(
-                        getMessage(e.text, e.author)
-                    );
-                });
+            this.auth(
+                userService.getUser()
+            );
         }
     }
 </script>
 
 <style lang="scss" scoped>
     .chat {
-        max-width: 600px;
-        height: 600px;
-        margin: 50px auto;
-        position: relative;
+        width: 100%;
+        height: 100%;
         border: 1px solid #efefef;
 
         &__input {
@@ -82,5 +110,11 @@
                 display: none; 
             }
         }
+    }
+    .chat-wrapper {
+        max-width: 600px;
+        height: 600px;
+        margin: 50px auto;
+        position: relative;
     }
 </style>
