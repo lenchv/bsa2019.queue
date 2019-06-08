@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/broadcasting/auth', function () {
+    return response()->json([]);
+});

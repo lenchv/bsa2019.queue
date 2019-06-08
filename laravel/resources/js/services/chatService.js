@@ -15,7 +15,18 @@ const broadcast = (channel) => {
     
     return {
         on(event, listener) {
-            return ch.listen(event, listener);
+            ch.listen(event, listener);
+            return this;
+        },
+        onWhisper(event, listener) {
+            Echo.private(channel).listenForWhisper(event, listener);
+
+            return this;
+        },
+        whisper(event, data) {
+            Echo.private(channel).whisper(event, data);
+            
+            return this;
         }
     };
 };

@@ -9,8 +9,9 @@
                     v-bind:key="index"
                 />
             </div>
+            <div v-if="typing" class='chat__typing'>{{ typing }} is typing ...</div>
             <div class="chat__input">
-                <chat-input v-on:change="send"/>
+                <chat-input v-on:change="send" v-on:typing="whisper"/>
             </div>
         </div>
         <auth-modal v-bind:show="showAuthModal" v-on:enter="auth"/>
@@ -34,7 +35,8 @@
             return {
                 user: {},
                 messages: [],
-                showAuthModal: false
+                showAuthModal: false,
+                typing: ''
             };
         },
         computed: {
@@ -55,6 +57,12 @@
                     .catch(console.error);
             },
 
+            whisper(e) {
+                chatService.broadcast('chat').whisper('typing', {
+                    name: this.user.name
+                });
+            },
+
             auth(userName) {
                 return userService.authnticate(userName)
                     .then(userData => {
@@ -67,6 +75,8 @@
                     })
                     .then((user) => {
                         this.showAuthModal = false;
+                        let timeout = null
+
                         chatService.broadcast('chat')
                             .on(`MessageEvent`, (e) => {
                                 this.messages.push(
@@ -75,6 +85,13 @@
                                         e.author
                                     )
                                 );
+                            })
+                            .onWhisper('typing', (e) => {
+                                this.typing = e.name;
+                                clearTimeout(timeout);
+                                timeout = setTimeout(() => {
+                                    this.typing =null;
+                                }, 1000);
                             });
                     })
                     .catch(error => {
@@ -108,16 +125,18 @@
         &__messages {
             height: calc(100% - 30px);
             overflow-y: auto;
+        }
 
-            &::-webkit-scrollbar { 
-                display: none; 
-            }
+        &__typing {
+            position: absolute;
+            bottom: 30px;
         }
     }
     .chat-wrapper {
         max-width: 600px;
-        height: 600px;
-        margin: 50px auto;
+        max-height: 600px;
+        height: calc(100vh - 100px);
+        margin: 100px auto;
         position: relative;
     }
 </style>

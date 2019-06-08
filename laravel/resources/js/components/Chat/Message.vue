@@ -42,6 +42,8 @@
             border-radius: 0 17px 17px 0;
             margin: 1px 0; 
             background-color: #d3e9fb;
+            word-break: break-word;
+            max-width: 100%;
             
             &_owner {
                 float: right;
