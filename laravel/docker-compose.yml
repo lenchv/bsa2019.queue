@@ -1,0 +1,55 @@
+version: "3.5"
+services:
+  php:
+    build:
+      dockerfile: .docker/php/Dockerfile
+      context: .
+      args:
+        - UID=1000
+        - GID=1000
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8000:8000
+    networks:
+      - queue
+      - broadcasting
+  composer:
+    image: composer:latest
+    volumes:
+        - ./:/app
+        - ./.composer:/composer
+  beanstalk:
+    image: schickling/beanstalkd:latest
+    ports:
+      - 11300:11300
+    networks:
+      - queue
+  mariadb:
+    image: mariadb:latest
+    env_file:
+      - .env
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    networks:
+      - queue
+  redis:
+    image: redis:5
+    networks:
+      - broadcasting
+  node:
+    build:
+      dockerfile: .docker/node/Dockerfile
+      context: .
+    working_dir: /myapp
+    networks:
+      - broadcasting
+    volumes:
+      - ./:/myapp
+networks:
+  queue:
+  broadcasting:
+
