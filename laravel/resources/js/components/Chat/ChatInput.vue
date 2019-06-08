@@ -1,7 +1,7 @@
 <template>
     <div class="chat-input">
         <div class="chat-input__container chat-input__container--left">
-            <input class="chat-input__text" type="text" v-model="message"/>
+            <input class="chat-input__text" type="text" v-model="message" v-on:keyup.enter="send"/>
         </div>
         <div class="chat-input__container chat-input__container--right">
             <button class="chat-input__button" v-on:click="send">send</button>
@@ -47,6 +47,7 @@
             border-radius: 0 15px 15px 0;
             background-color: transparent;
             box-sizing: border-box;
+            height: 30px;
 
             &:focus {
                 outline: none;
@@ -65,6 +66,7 @@
             border-right: none;
             background-color: transparent;
             box-sizing: border-box;
+            height: 30px;
 
             &:focus {
                 outline: none;

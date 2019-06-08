@@ -1,10 +1,13 @@
 import requestService from './requestService';
 
+const getSocketId = () => Echo.socketId();
 const getMessage = (text, author) => ({ text, author });
 const putMessage = (message, userId) => {
     return requestService.auth('POST', '/api/messages', {
         message
-    }, userId);
+    }, userId, {
+        'X-Socket-ID': getSocketId()
+    });
 };
 
 const broadcast = (channel) => {
@@ -18,6 +21,7 @@ const broadcast = (channel) => {
 };
 
 export default {
+    getSocketId,
     getMessage,
     putMessage,
     broadcast

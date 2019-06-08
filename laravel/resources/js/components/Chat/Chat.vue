@@ -68,7 +68,7 @@
                     .then((user) => {
                         this.showAuthModal = false;
                         chatService.broadcast('chat')
-                            .on(`message.${user.id}`, (e) => {
+                            .on(`MessageEvent`, (e) => {
                                 this.messages.push(
                                     chatService.getMessage(
                                         e.message,

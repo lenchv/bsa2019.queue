@@ -27,16 +27,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        
-        Auth::viaRequest('simple-auth', function (Request $request) {
-            $userRepository = $this->app->make(UserRepository::class);
-            $userId = $request->headers->get('x-user-id');
-            
-            if (is_null($userId)) {
-                return;
-            }
-            
-            return $userRepository->getById((int) $userId);
-        });
     }
 }

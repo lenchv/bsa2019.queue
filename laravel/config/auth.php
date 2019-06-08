@@ -42,9 +42,6 @@ return [
         ],
 
         'api' => [
-            'driver' => 'simple-auth',
-            'provider' => 'users',
-            'hash' => false,
         ],
     ],
 

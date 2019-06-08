@@ -14,7 +14,7 @@ class UserRepository implements UserRepositoryContract
 
     public function getById(int $userId): ?User
     {
-        return Uesr::find($userId);
+        return User::find($userId);
     }
 
     public function save(User $user) : User

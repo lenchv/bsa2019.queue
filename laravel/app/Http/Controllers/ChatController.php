@@ -5,20 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Events\MessageEvent;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Broadcasting\Broadcaster;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    private $eventDispatcher;
-
-    public function __construct(Dispatcher $eventDispatcher)
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
     public function send(Request $request) {
-        $this->eventDispatcher->dispatch(new MessageEvent(
-            $request->input('message')
-        ));
+        $user = Auth::user();
+
+        MessageEvent::broadcast($user, $request->input('message'))
+            ->toOthers();
 
         return response()->json([], 200);
     }

@@ -28,14 +28,14 @@ const fetchData = (method, endpoint, data, customHeaders = {}) => {
     });
 };
 
-const authFetch = (method, endpoint, data, userId) => {
+const authFetch = (method, endpoint, data, userId, customHeaders = {}) => {
     if (!userId) {
         return Promise.reject('User is not authorized!');
     }
 
-    return fetchData(method, endpoint, data, {
+    return fetchData(method, endpoint, data, Object.assign({
         'x-user-id': userId
-    });
+    }, customHeaders));
 };
 
 export default {
