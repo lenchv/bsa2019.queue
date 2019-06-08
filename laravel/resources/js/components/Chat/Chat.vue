@@ -13,7 +13,7 @@
                 <chat-input v-on:change="send"/>
             </div>
         </div>
-        <auth-modal v-bind:show="needsAuthorization" v-on:enter="auth"/>
+        <auth-modal v-bind:show="showAuthModal" v-on:enter="auth"/>
     </div>
 </template>
 
@@ -33,7 +33,8 @@
         data() {
             return {
                 user: {},
-                messages: []
+                messages: [],
+                showAuthModal: false
             };
         },
         computed: {
@@ -65,10 +66,11 @@
                         return this.user;
                     })
                     .then((user) => {
+                        this.showAuthModal = false;
                         chatService.broadcast('chat')
                             .on(`message.${user.id}`, (e) => {
                                 this.messages.push(
-                                    getMessage(
+                                    chatService.getMessage(
                                         e.message,
                                         e.author
                                     )
@@ -78,6 +80,7 @@
                     .catch(error => {
                         console.error(error);
                         this.user = {};
+                        this.showAuthModal = true;
                     });
             }
         },

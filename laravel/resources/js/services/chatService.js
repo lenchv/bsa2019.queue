@@ -1,6 +1,8 @@
+import requestService from './requestService';
+
 const getMessage = (text, author) => ({ text, author });
 const putMessage = (message, userId) => {
-    return authFetch('POST', '/api/messages', {
+    return requestService.auth('POST', '/api/messages', {
         message
     }, userId);
 };

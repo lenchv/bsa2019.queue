@@ -1,11 +1,15 @@
 const fetchData = (method, endpoint, data, customHeaders = {}) => {
-    const headers = Object.keys(customHeaders)
+    const headersData = Object.assign({
+        'Content-Type': 'application/json'
+    }, customHeaders);
+
+    const headers = Object.keys(headersData)
         .reduce((headers, headerName) => {
-            headers.append(headerName, customHeaders[headerName]);
+            headers.append(headerName, headersData[headerName]);
 
             return headers;
         }, new Headers())
-        .append('Content-Type', 'application/json');
+
     const requestData = {
         method,
         headers
