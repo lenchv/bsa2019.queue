@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Jobs\Example1 as Example1;
+use App\Jobs\MyJob;
 use App\Jobs\Failed;
 
 class QueueController extends Controller
 {
     public function asyncTask(Request $request) {
-        Example1::dispatch(
+        MyJob::dispatch(
             $request->input('data'),
             $request->input('complexity')
         )->onConnection('beanstalkd');
@@ -20,7 +20,7 @@ class QueueController extends Controller
     }
 
     public function syncTask(Request $request) {
-        Example1::dispatch(
+        MyJob::dispatch(
             $request->input('data'),
             $request->input('complexity')
         )->onConnection('sync');
@@ -32,5 +32,7 @@ class QueueController extends Controller
 
     public function failJob() {
         Failed::dispatch();
+
+        return response()->json([], 200);
     }
 }

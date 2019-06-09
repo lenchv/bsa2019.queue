@@ -27,6 +27,10 @@ const broadcast = (channel) => {
             Echo.private(channel).whisper(event, data);
             
             return this;
+        },
+        leave() {
+            Echo.leave(channel);
+            return this;
         }
     };
 };

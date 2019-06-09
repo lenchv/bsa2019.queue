@@ -1,5 +1,6 @@
 <template>
     <div class="chat-wrapper">
+        <button v-if="needsLogout" class="logout-button" v-on:click="logout">logout</button>
         <div class="chat">
             <div class="chat__messages">
                 <message
@@ -40,8 +41,8 @@
             };
         },
         computed: {
-            needsAuthorization() {
-                return !this.user.id;
+            needsLogout() {
+                return !this.showAuthModal;
             }
         },
         methods: {
@@ -76,6 +77,14 @@
                     this.messages = messages;
                     this.scrollToEnd();
                 });
+            },
+
+            logout() {
+                userService.saveUser('');
+                this.user = {};
+                this.showAuthModal = true;
+                this.messages = [];
+                chatService.broadcast('chat').leave();
             },
 
             auth(userName) {
@@ -158,5 +167,11 @@
         height: calc(100vh - 100px);
         margin: 50px auto;
         position: relative;
+    }
+
+    .logout-button {
+        position: absolute;
+        top: -30px;
+        height: 30px;
     }
 </style>
