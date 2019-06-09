@@ -1,9 +1,10 @@
 <template>
     <div class="message">
         <div class="message__text" v-bind:class="{
-            message__text_owner: isOwner
+            message__text_owner: isAuthor
         }">
-            {{ message.text }}
+            <div>{{ message.text }}</div>
+            <div v-if="isNotAuthor" class="message__author">{{ message.author }}</div>
         </div>
     </div>
 </template>
@@ -11,13 +12,21 @@
 <script>
     export default {
         props: {
-            authorId: String,
+            userName: String,
             message: Object
         },
 
         computed: {
+            isAuthor() {
+                return this.isOwner();
+            },
+            isNotAuthor() {
+                return !this.isOwner();
+            }
+        },
+        methods: {
             isOwner() {
-                return this.authorId === this.message.author;
+                return this.userName === this.message.author;
             }
         }
     }
@@ -33,12 +42,19 @@
             border-radius: 0 17px 17px 0;
             margin: 1px 0; 
             background-color: #d3e9fb;
+            word-break: break-word;
+            max-width: 100%;
             
             &_owner {
                 float: right;
                 border-radius: 17px 0 0 17px;
                 background-color: #f0f0f0;
             }
+        }
+
+        &__author {
+            font-style: italic;
+            font-size: .8em;
         }
     }
 </style>

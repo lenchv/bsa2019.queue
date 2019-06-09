@@ -17,4 +17,8 @@ Route::put('/queue/sync', 'QueueController@syncTask');
 Route::put('/queue/async', 'QueueController@asyncTask');
 Route::put('/queue/fail', 'QueueController@failJob');
 
-Route::post('/message', 'ChatController@send');
+Route::get('/messages', 'ChatController@getMessages')->middleware('auth.api');
+Route::post('/messages', 'ChatController@send')->middleware('auth.api');
+
+Route::get('/users/{userName}', 'UserController@getUser');
+Route::post('/users', 'UserController@createUser');

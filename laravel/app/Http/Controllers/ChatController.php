@@ -3,23 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Events\MessageEvent;
-use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Facades\Auth;
+use App\Contracts\Services\ChatService;
+use App\Services\DTO\MessageDTO;
 
 class ChatController extends Controller
 {
-    private $eventDispatcher;
+    private $chatService;
 
-    public function __construct(Dispatcher $eventDispatcher)
+    public function __construct(ChatService $chatService)
     {
-        $this->eventDispatcher = $eventDispatcher;
+        $this->chatService = $chatService;
     }
 
     public function send(Request $request) {
-        $this->eventDispatcher->dispatch(new MessageEvent(
-            $request->input('message')
-        ));
+        try {
 
-        return response()->json([], 200);
+            $messageData = new MessageDTO(
+                Auth::user(),
+                $request->input('message')
+            );
+            $message = $this->chatService->sendTo($messageData);
+    
+            return response()->json([], 200);
+        } catch (\Exception $e) {
+            return response([
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
+
+    public function getMessages()
+    {
+        try {
+            $messages = $this->chatService->getMessages();
+    
+            return response()->json($messages, 200);
+        } catch (\Exception $e) {
+            return response([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 }
