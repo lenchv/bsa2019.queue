@@ -13,13 +13,28 @@
 
 ## Running
 
+> \# Run server\
 > docker-compose exec php php artisan serve --port=8000 --host=0.0.0.0 \
+> \#Run queue\
 > docker-compose exec php php artisan queue:work --tries=3 \
+> \# Run echo-server\
 > docker-compose run --rm -p 6001:6001 node ./node_modules/.bin/laravel-echo-server start \
+> \# Run webpack\
 > docker-compose run --rm node npm run watch
 
-
 Then open http://localhost:8000 in browser.
+
+## Stop
+
+Close server, queue, echo-server and webpack by Ctrl+C, and then run command:
+
+> docker-compose stop
+
+or
+
+> docker-compose down
+
+the last will remove all data saved in containers (e.g. data in database)
 
 ## Useful commands
 
