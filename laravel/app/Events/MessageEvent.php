@@ -7,19 +7,17 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\Entities\User;
 use Illuminate\Bus\Queueable;
+use App\Entities\Message;
 
 class MessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, Queueable, SerializesModels;
 
-    private $userName;
-    private $message;
+    public $message;
 
-    public function __construct(User $user, string $message)
+    public function __construct(Message $message)
     {
-        $this->userName = $user->name;
         $this->message = $message;
     }
 
@@ -31,8 +29,8 @@ class MessageEvent implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            "message" => $this->message,
-            "author" => $this->userName
+            "message" => $this->message->message,
+            "author" => $this->message->author->name
         ];
     }
 }

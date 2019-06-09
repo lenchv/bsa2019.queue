@@ -31,8 +31,18 @@ const broadcast = (channel) => {
     };
 };
 
+const getMessages = (userId) => {
+    return requestService.auth('GET', '/api/messages', null, userId)
+        .then(messages => {
+            return messages.map((message) => {
+                return getMessage(message.message, message.author);
+            })
+        });
+};
+
 export default {
     getSocketId,
+    getMessages,
     getMessage,
     putMessage,
     broadcast

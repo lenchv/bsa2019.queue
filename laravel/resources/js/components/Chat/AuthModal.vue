@@ -29,9 +29,6 @@
             enter() {
                 this.$emit('enter', this.name);
             }
-        },
-        mounted() {
-            console.log(this.show);
         }
     };
 </script>

@@ -53,13 +53,28 @@
                             this.user.name
                         );
                         this.messages.push(messageItem);
+                        this.scrollToEnd();
                     })
                     .catch(console.error);
+            },
+
+            scrollToEnd() {
+                setTimeout(() => {
+                    const messagesBlock = this.$el.querySelector('.chat__messages');
+                    messagesBlock.scrollTop = messagesBlock.scrollHeight;
+                }, 0);
             },
 
             whisper(e) {
                 chatService.broadcast('chat').whisper('typing', {
                     name: this.user.name
+                });
+            },
+
+            loadMessages() {
+                return chatService.getMessages(this.user.id).then(messages => {
+                    this.messages = messages;
+                    this.scrollToEnd();
                 });
             },
 
@@ -75,7 +90,7 @@
                     })
                     .then((user) => {
                         this.showAuthModal = false;
-                        let timeout = null
+                        let timeout = null;
 
                         chatService.broadcast('chat')
                             .on(`MessageEvent`, (e) => {
@@ -85,6 +100,7 @@
                                         e.author
                                     )
                                 );
+                                this.scrollToEnd();
                             })
                             .onWhisper('typing', (e) => {
                                 this.typing = e.name;
@@ -93,6 +109,8 @@
                                     this.typing =null;
                                 }, 1000);
                             });
+
+                        this.loadMessages();
                     })
                     .catch(error => {
                         console.error(error);
@@ -125,18 +143,20 @@
         &__messages {
             height: calc(100% - 30px);
             overflow-y: auto;
+            padding-bottom: 20px;
         }
 
         &__typing {
             position: absolute;
             bottom: 30px;
+            height: 20px;
         }
     }
     .chat-wrapper {
         max-width: 600px;
         max-height: 600px;
         height: calc(100vh - 100px);
-        margin: 100px auto;
+        margin: 50px auto;
         position: relative;
     }
 </style>

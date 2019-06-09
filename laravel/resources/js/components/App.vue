@@ -8,9 +8,6 @@
     export default {
         components: {
             Chat
-        },
-        mounted() {
-            console.log('Component mounted.')
         }
     }
 </script>
