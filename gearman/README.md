@@ -1,6 +1,6 @@
 # Gearman Example
 
-Installation on Ubuntu:
+## Installation on Ubuntu:
 
 > sudo apt-get install gearman php-gearman gearman-tools
 
@@ -21,7 +21,7 @@ Usefull commands:
 > gearadmin --show-jobs \
 > gearadmin --workers
 
-Or using Docker:
+## Using Docker:
 
 First change `"host"` in `src/config.php` on "gearman", and then execute following commands:
 
