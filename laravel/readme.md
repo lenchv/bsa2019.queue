@@ -92,12 +92,6 @@ curl -XPUT -H "Content-Type: application/json" \
 
 curl -XPUT http://127.0.0.1:8000/api/queue/fail 
 
-# send a message to chat
-
-curl -XPOST http://127.0.0.1:8000/api/message -H "Content-Type: application/json" -d"{\
-    \"message\": \"text\",\
-    \"author\": \"user name\"\
-}"
 ```
 
 ## Broadcasting
