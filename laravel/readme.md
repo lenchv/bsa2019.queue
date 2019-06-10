@@ -2,14 +2,14 @@
 
 ## Installation
 
+> cp .env.example .env \
 > docker-compose pull \
 > docker-compose up -d 
 >
 > docker-compose run --rm composer composer install \
 > docker-compose run --rm node npm install \
-> cp .env.example .env \
 > docker-compose exec php php artisan key:generate \
-> docker-compose exec php php artisan migrate:install
+> docker-compose exec php php artisan migrate
 
 ## Running
 
