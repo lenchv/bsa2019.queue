@@ -18,7 +18,7 @@
 > \#Run queue\
 > docker-compose exec php php artisan queue:work --tries=3 \
 > \# Run echo-server\
-> docker-compose run --rm -p 6001:6001 node ./node_modules/.bin/laravel-echo-server start \
+> docker-compose run --rm -p 6001:6001 node laravel-echo-server start \
 > \# Run webpack\
 > docker-compose run --rm node npm run watch
 
@@ -101,3 +101,17 @@ Details:
 [Laravel. Broadcasting](https://laravel.com/docs/5.8/broadcasting)
 
 [laravel-echo-server](https://github.com/tlaverdure/laravel-echo-server)
+
+# Windows troubleshoot
+
+If you use windows docker toolbox with virtualbox and something goes wrong, make sure the project was stored on the system disk (e.g. C:/).
+
+Also, after starting docker machine (docker-machine start default) check in virtualbox that prots are forwarded (Settings -> Network -> Advanced -> Port forwarding). You need to forward 8000 and 6001 ports in order to the project works.
+
+If something wrong with installing node_modules, try to use node from your host machine. It means run commands:
+
+> npm install
+>
+> npm run watch
+
+If you faced another problem please right an issue and I will try to fix it or send pull request.

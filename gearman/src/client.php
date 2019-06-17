@@ -6,13 +6,13 @@ $benchmark = require(__DIR__ . '/benchmark.php');
 $testData = "Test data ";
 
 echo PHP_EOL;
-$benchmark($asyncFunc, "Asynchronous operation", $testData, 100000);
-$benchmark($asyncFunc, "Asynchronous operation", $testData, 200000);
-$benchmark($asyncFunc, "Asynchronous operation", $testData, 500000);
-$benchmark($asyncFunc, "Asynchronous operation", $testData, 750000);
+$benchmark($asyncFunc, "Asynchronous operation", $testData, 100);
+$benchmark($asyncFunc, "Asynchronous operation", $testData, 200);
+$benchmark($asyncFunc, "Asynchronous operation", $testData, 500);
+$benchmark($asyncFunc, "Asynchronous operation", $testData, 750);
 
 echo PHP_EOL;
-$benchmark($func, "Synchronous operation", $testData, 100000);
-$benchmark($func, "Synchronous operation", $testData, 200000);
-$benchmark($func, "Synchronous operation", $testData, 500000);
-$benchmark($func, "Synchronous operation", $testData, 750000);
+$benchmark($func, "Synchronous operation", $testData, 100);
+$benchmark($func, "Synchronous operation", $testData, 200);
+$benchmark($func, "Synchronous operation", $testData, 500);
+$benchmark($func, "Synchronous operation", $testData, 750);
