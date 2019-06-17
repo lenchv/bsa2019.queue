@@ -13,8 +13,8 @@ class Failed implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $fileName;
-    private $fileSystem;
+    public $fileName;
+    public $fileSystem;
 
     public function __construct()
     {

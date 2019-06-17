@@ -13,8 +13,8 @@ class MyJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $data;
-    private $complexity;
+    public $data;
+    public $complexity;
 
     public function __construct(string $data, int $complexity)
     {
