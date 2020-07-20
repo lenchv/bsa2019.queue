@@ -1,4 +1,4 @@
-FROM php:7.3.5-cli-alpine
+FROM php:7.3.20-cli-alpine3.12
 
 ENV GEARMAN_VERSION=2.0.3
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
