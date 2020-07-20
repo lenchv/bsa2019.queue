@@ -25,7 +25,6 @@ Usefull commands:
 
 First change `"host"` in `src/config.php` on "gearman", and then execute following commands:
 
-> docker-compose build \
 > docker-compose up -d
 >
 > \# run worker \

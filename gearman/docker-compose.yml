@@ -1,9 +1,7 @@
 version: "3.5"
 services:
   php:
-    build:
-      dockerfile: ./Dockerfile
-      context: .
+    image: lenchv/php7-gearman:0.0.1-alpine
     volumes:
       - ./src:/myapp
   gearman:
